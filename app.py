@@ -1,5 +1,5 @@
 # Here we import the necessary .py files, which hold tuples we need throughout the app.
-import src.confs as confs, src.slugs as slugs, src.tools as tools
+import lib.confs as confs, lib.slugs as slugs, lib.tools as tools
 
 def app():
     print("Hello, World!")
