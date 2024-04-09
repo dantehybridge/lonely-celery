@@ -1,11 +1,6 @@
 import os, json, random as rnd, requests as rqs
 
-# https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{team}/roster
-# https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{team}/roster?enable=roster,projection,stats
-
-# site.api.espn.com/apis/site/v2/sports/football/nfl/teams -> gets all teams with id, logo, and name
-
-urls = ('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams', '', '')
+urls = ('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams', 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{team}/roster')
 
 def gets(url):
     try:
@@ -40,7 +35,7 @@ def Search(opt, input):
             print(error)
 
     def by_random(input):
-        # input: it is a tuple comprised of filters
+        # input: it is a tuple comprised of filters; the first element is a boolean, the second element is a list of strings, which are the conference and division names
 
         def handleGets(url):
             return gets(url)
