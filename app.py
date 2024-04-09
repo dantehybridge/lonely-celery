@@ -38,7 +38,25 @@ def app():
             div = input('\nWrite the division you want to search for: ').lower()
 
             return tools.Search(3, (cnf, div))
+        
+        if sub == 2:
+            flt = input('\nWould you like to set some filters? (y/n) ').lower()
 
+            if flt == 'y':
+                cnf = input('\nWrite the conference you want to search for: ').lower()
+
+                flt = input('\nWould you like to add more filters? (y/n) ').lower()
+
+                if flt == 'y':
+                    div = input('\nWrite the division you want to search for: ').lower()
+
+                    return tools.Search(2, (True, [cnf, div]))
+                
+                if flt == 'n':
+                    return tools.Search(2, (True, [cnf]))
+            
+            if flt == 'n':
+                return tools.Search(2, (False, []))
     
 if __name__ == "__main__":
     app()
