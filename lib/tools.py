@@ -55,10 +55,64 @@ def Search(opt, input):
     def by_division(input):
         # input: it is a duplet; the first element is the conference name as a string, e.g. "afc", and second element is the division name as a string, e.g. "north"
 
+        def handleGets(url):
+            return gets(url)
+        
+        def handleSaves(cnf, div, data):
+            name = f'{cnf}-{div}'
+            data = data['sports'][0]['leagues'][0]['teams']
+
+            dump = []
+
+            if cnf == 'afc':
+                if div == 'north':
+                    for team in data:
+                        if team['team']['slug'] in ['baltimore-ravens', 'cincinnati-bengals', 'cleveland-browns', 'pittsburgh-steelers']:
+                            dump.append(team)
+            
+                if div == 'east':
+                    for team in data:
+                        if team['team']['slug'] in ['buffalo-bills', 'miami-dolphins', 'new-england-patriots', 'new-york-jets']:
+                            dump.append(team)
+            
+                if div == 'south':
+                    for team in data:
+                        if team['team']['slug'] in ['houston-texans', 'indianapolis-colts', 'jacksonville-jaguars', 'tennessee-titans']:
+                            dump.append(team)
+            
+                if div == 'west':
+                    for team in data:
+                        if team['team']['slug'] in ['denver-broncos', 'kansas-city-chiefs', 'las-vegas-raiders', 'los-angeles-chargers']:
+                            dump.append(team)
+            
+            if cnf == 'nfc':
+                if div == 'north':
+                    for team in data:
+                        if team['team']['slug'] in ['chicago-bears', 'detroit-lions', 'green-bay-packers', 'minnesota-vikings']:
+                            dump.append(team)
+                
+                if div == 'east':
+                    for team in data:
+                        if team['team']['slug'] in ['dallas-cowboys', 'new-york-giants', 'philadelphia-eagles', 'washington-commanders']:
+                            dump.append(team)
+                
+                if div == 'south':
+                    for team in data:
+                        if team['team']['slug'] in ['atlanta-falcons', 'carolina-panthers', 'new-orleans-saints', 'tampa-bay-buccaneers']:
+                            dump.append(team)
+                
+                if div == 'west':
+                    for team in data:
+                        if team['team']['slug'] in ['arizona-cardinals', 'los-angeles-rams', 'san-francisco-49ers', 'seattle-seahawks']:
+                            dump.append(team)
+
+            saves(name, dump)
+
         try:
             assert isinstance(input, tuple), 'The input should be a tuple. Try again.'
 
-            return input
+            data = handleGets(urls[0])
+            handleSaves(input[0], input[1], data)
         except Exception as error:
             print(error)
 
@@ -68,8 +122,8 @@ def Search(opt, input):
         def handleGets(url):
             return gets(url)
         
-        def handleSaves(conf, data):
-            name = conf.upper()
+        def handleSaves(cnf, data):
+            name = cnf
             data = data['sports'][0]['leagues'][0]['teams']
 
             dump = {
@@ -79,7 +133,7 @@ def Search(opt, input):
                 'West': []
             }
 
-            if conf == 'afc':
+            if cnf == 'afc':
                 for team in data:
                     if team['team']['slug'] in ['baltimore-ravens', 'cincinnati-bengals', 'cleveland-browns', 'pittsburgh-steelers']:
                         dump['North'].append(team)
@@ -93,7 +147,7 @@ def Search(opt, input):
                     if team['team']['slug'] in ['denver-broncos', 'kansas-city-chiefs', 'las-vegas-raiders', 'los-angeles-chargers']:
                         dump['West'].append(team)
                     
-            if conf == 'nfc':
+            if cnf == 'nfc':
                 for team in data:
                     if team['team']['slug'] in ['chicago-bears', 'detroit-lions', 'green-bay-packers', 'minnesota-vikings']:
                         dump['North'].append(team)
