@@ -1,7 +1,4 @@
-import os, json, requests as rqs
-
-divs = ('North', 'East', 'South', 'West')
-confs = ('AFC', 'NFC')
+import os, json, random as rnd, requests as rqs
 
 # https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{team}/roster
 # https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{team}/roster?enable=roster,projection,stats
@@ -43,12 +40,86 @@ def Search(opt, input):
             print(error)
 
     def by_random(input):
-        # input: it is a list comprised of options, represented as integers; the options are filters to be used for the random search
+        # input: it is a tuple comprised of filters
+
+        def handleGets(url):
+            return gets(url)
+        
+        def handleSaves(data):
+            name = data['team']['slug']
+            saves(name, data)
 
         try:
-            assert isinstance(input, list), 'The input should be a list. Try again.'
+            assert isinstance(input, tuple), 'The input should be a tuple. Try again.'
 
-            return input
+            if input[0] == False:
+                random = rnd.randint(1, 34)
+                data = handleGets(f'{urls[0]}/{random}')
+                handleSaves(data)
+            else:
+                choices = {
+                    'afc': {
+                        1: [33, 4, 5, 23],      # North
+                        2: [2, 15, 17, 20],     # East
+                        3: [34, 11, 30, 10],    # South 
+                        4: [7, 12, 13, 24]      # West
+                    },
+                    'nfc': {
+                        1: [3, 8, 9, 16],       # North
+                        2: [6, 19, 21, 28],     # East
+                        3: [1, 29, 18, 27],     # South
+                        4: [22, 14, 25, 26]     # West
+                    }
+                }
+
+                if len(input[1]) == 2:
+                    divs = ['north', 'east', 'south', 'west']
+
+                    if input[1][0] == 'afc':
+                        if input[1][1] == divs[0]:
+                            random = rnd.choice(choices['afc'][1])
+                            data = handleGets(f'{urls[0]}/{random}')
+                        
+                        if input[1][1] == divs[1]:
+                            random = rnd.choice(choices['afc'][2])
+                            data = handleGets(f'{urls[0]}/{random}')
+                        
+                        if input[1][1] == divs[2]:
+                            random = rnd.choice(choices['afc'][3])
+                            data = handleGets(f'{urls[0]}/{random}')
+
+                        if input[1][1] == divs[3]:
+                            random = rnd.choice(choices['afc'][4])
+                            data = handleGets(f'{urls[0]}/{random}')
+
+                    if input[1][0] == 'nfc':
+                        if input[1][1] == divs[0]:
+                            random = rnd.choice(choices['nfc'][1])
+                            data = handleGets(f'{urls[0]}/{random}')
+                        
+                        if input[1][1] == divs[1]:
+                            random = rnd.choice(choices['nfc'][2])
+                            data = handleGets(f'{urls[0]}/{random}')
+                        
+                        if input[1][1] == divs[2]:
+                            random = rnd.choice(choices['nfc'][3])
+                            data = handleGets(f'{urls[0]}/{random}')
+
+                        if input[1][1] == divs[3]:
+                            random = rnd.choice(choices['nfc'][4])
+                            data = handleGets(f'{urls[0]}/{random}')
+
+                if len(input[1]) == 1:
+                    if input[1][0] == 'afc':
+                        random = rnd.choice(choices['afc'][rnd.randint(1, 4)])
+                        data = handleGets(f'{urls[0]}/{random}')
+                    
+                    if input[1][0] == 'nfc':
+                        random = rnd.choice(choices['nfc'][rnd.randint(1, 4)])
+                        data = handleGets(f'{urls[0]}/{random}')
+
+                handleSaves(data)
+
         except Exception as error:
             print(error)
 
