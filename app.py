@@ -43,12 +43,12 @@ def app():
             flt = input('\nWould you like to set some filters? (y/n) ').lower()
 
             if flt == 'y':
-                cnf = input('\nWrite the conference you want to search for: ').lower()
+                cnf = input('\nWrite the conference name you want to search for: ').lower()
 
                 flt = input('\nWould you like to add more filters? (y/n) ').lower()
 
                 if flt == 'y':
-                    div = input('\nWrite the division you want to search for: ').lower()
+                    div = input('\nWrite the division name you want to search for: ').lower()
 
                     return tools.Search(2, (True, [cnf, div]))
                 
