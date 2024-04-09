@@ -21,19 +21,23 @@ def app():
     view_menu(menu['options'])
 
     opt = int(input('\nWrite the number of the action you want to perform: '))
-    print(opt) # 1, ergo Search
 
     if opt == 1:
         view_menu(menu['suboptions'])
 
-        opt = int(input('\nWrite the number of the action you want to perform: '))
-        print(opt) # 4, ergo By Conference
+        sub = int(input('\nWrite the number of the action you want to perform: '))
 
-        if opt == 4:
-            opt = input('\nWrite the conference you want to search for: ').lower()
-            print(opt) # nfc
+        if sub == 4:
+            cnf = input('\nWrite the conference you want to search for: ').lower()
 
-            return tools.Search(4, opt)
+            return tools.Search(4, cnf)
+        
+        if sub == 3:
+            cnf = input('\nWrite the conference you want to search for: ').lower()
+
+            div = input('\nWrite the division you want to search for: ').lower()
+
+            return tools.Search(3, (cnf, div))
 
     
 if __name__ == "__main__":
